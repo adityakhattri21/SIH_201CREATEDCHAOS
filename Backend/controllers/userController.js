@@ -52,3 +52,4 @@ exports.createUser = catchAsyncError(async (req, res, next) => {
     }
     return next(new ErrorHandler("Route under Construction ! ", 500));
 })
+
