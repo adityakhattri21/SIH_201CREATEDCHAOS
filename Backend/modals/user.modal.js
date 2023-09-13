@@ -30,7 +30,7 @@ const user = new Schema({
         required:true
     },
     postalCode:{
-        type:Number,
+        type:String,
         required:true
     },
     aadharNumber:{
