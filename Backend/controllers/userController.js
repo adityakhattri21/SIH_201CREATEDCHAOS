@@ -1,13 +1,13 @@
 const userTypes = ["user", "lawyer", "other"]
 const User = require("../modals/user.modal")
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
 const Login = require("../modals/login.modal")
 const ErrorHandler = require("../utils/errorHandler")
-const catchAsyncError = require("../middleware/catchAsyncErrors");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Lawyer = require("../modals/lawyer.modal")
+const sendToken = require("../utils/generateToken");
 
-exports.createUser = catchAsyncError(async (req, res, next) => {
+exports.createUser = catchAsyncErrors(async (req, res, next) => {
     //validating request
     const { userType } = req.body
     if (!userType) return next(new ErrorHandler('Send UserType idiot', 400));
@@ -51,4 +51,27 @@ exports.createUser = catchAsyncError(async (req, res, next) => {
         return res.status(200).json({ msg: "Wohhooo !! Lawyer Created ", success: true })
     }
     return next(new ErrorHandler("Route under Construction ! ", 500));
-})
+});
+
+exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
+    let loginUser;
+    const {email,password} = req.body;
+
+    if(!email || !password) return next(new ErrorHandler("Incomplete Credentials",401));
+
+    const reqUser = await  Login.findOne({email:email});
+
+    if(!reqUser) return next(new ErrorHandler("Invalid Credentials",401));
+
+    const comparePwd = await bcrypt.compare(password,reqUser.password);
+
+    if(!comparePwd) return next(new ErrorHandler("Invalid Credentials",401));
+
+    const userType = reqUser.userType;
+    if(userType === 'user')
+    loginUser = await User.findById(reqUser.uid);
+    else if(userType === 'lawyer')
+    loginUser = await Lawyer.findById(reqUser.uid);
+
+    sendToken(loginUser,userType,res);
+ })

@@ -12,7 +12,6 @@ const login = new Schema({
     uid:{
         type:Schema.Types.ObjectId,
         required:true,
-        ref:"users"
     },
     userType:{
         type:String,
