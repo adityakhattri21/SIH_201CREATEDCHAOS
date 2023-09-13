@@ -19,7 +19,9 @@ const user = new Schema({
     },
     contact : {
         type:Number,
-        required:true
+        required:true,
+        minlength:[10,"Invalid Mobile number"],
+        maxLength:[10,"Invalid Mobile number"]
     },
     city:{
         type:String,
@@ -36,8 +38,8 @@ const user = new Schema({
     aadharNumber:{
         type:String,
         required:true,
-        minlength:12,
-        maxlength:12
+        minlength:[12,"Invalid Aadhaar Number"],
+        maxlength:[12,"Invalid Aadhaar Number"],
     },
 })
 

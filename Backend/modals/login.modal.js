@@ -7,7 +7,7 @@ const login = new Schema({
     },
     password:{
         type:String,
-        required:true
+        required:true,
     },
     uid:{
         type:Schema.Types.ObjectId,

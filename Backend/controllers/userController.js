@@ -3,18 +3,25 @@ const User = require("../modals/user.modal")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const Login = require("../modals/login.modal")
+const ErrorHandler = require("../utils/errorHandler")
+const catchAsyncError = require("../middleware/catchAsyncErrors");
 
-exports.createUser = async (req,res) => {
+exports.createUser = catchAsyncError(async (req,res,next) => {
     const {userType} = req.body
-    if(!userType) return res.status(400).json({msg:"Send UserType idiot", success:false})
-    if(!userTypes.includes(userType)) return res.status(400).json({msg:"Invalid User type", success:false})
+    if(!userType) return next(new ErrorHandler('Send UserType idiot',400));
+
+    if(!userTypes.includes(userType)) return next(new ErrorHandler('Invalid User Type',400));
+
     if(userType==="user"){
         const {firstName, lastName, email, gender, contact, city, state ,postalCode, aadharNumber, password} = req.body
         if(!firstName || !lastName || !email || !gender || !contact || !city || !state || !postalCode ||!aadharNumber ||!password){
-            return res.status(400).json({msg:"Parameter missing bruh!", success:false, received: req.body})
-        }   
+            return next(new ErrorHandler("Parameter missing bruh!",400));
+        }
+
         const existingUser = await Login.findOne({email})
-        if(existingUser) return res.status(400).json({msg:"User Already Exists", success:false})
+
+        if(existingUser) return next(new ErrorHandler("User Already Exists",400));
+
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(password, salt);
         const user = await User.create(req.body)
@@ -26,5 +33,5 @@ exports.createUser = async (req,res) => {
         })
         return res.status(200).json({msg:"Wohhooo !! User Created ", success:true})
     }
-    res.status(500).json({msg:"Route under Construction ! ", success:false})
-}
+    return next(new ErrorHandler("Route under Construction ! ",500));
+})
