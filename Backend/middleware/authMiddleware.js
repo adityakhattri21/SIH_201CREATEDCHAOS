@@ -13,9 +13,11 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req,res,next)=>{
     if(decodedData.userType === 'user')
     req.user = await User.findById(decodedData.user._id);
     
+    
     else if(decodedData.userType === 'lawyer')
     req.user = await Lawyer.findById(decodedData.user._id);
-
+    
+    req.userType = decodedData.userType
 
     next();
 })
