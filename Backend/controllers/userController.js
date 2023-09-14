@@ -75,3 +75,10 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
 
     sendToken(loginUser,userType,res);
  })
+
+ //fetches the current authenticated user
+ exports.getUser = catchAsyncErrors((req,res) => {
+    if(!req.user)
+        return res.status(403).json({isAuthenticated : false})
+    res.status(200).json({user:req.user,isAuthenticated:true})
+})
