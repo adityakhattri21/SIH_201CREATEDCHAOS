@@ -49,7 +49,7 @@ const lawyer = new Schema({
         required: true
     },
     specialization:[String],
-    notary:{type:Boolean,
+    isNotary:{type:Boolean,
             default:false},
     notaryId:{type:String},
     
