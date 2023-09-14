@@ -15,6 +15,6 @@ router.post("/test",isAuthenticatedUser,(req,res,next)=>{
     });
 })
 
-router.get("/fetch",isAuthenticatedUser,getUser)
+//router.get("/fetch",isAuthenticatedUser,getUser)
 
 module.exports = router
