@@ -1,4 +1,5 @@
-const { createUser, loginUser } = require("../controllers/userController");
+
+const { createUser, loginUser,getUser } = require("../controllers/userController");
 const { isAuthenticatedUser } = require("../middleware/authMiddleware");
 
 const router = require("express").Router()
@@ -13,5 +14,7 @@ router.post("/test",isAuthenticatedUser,(req,res,next)=>{
         user:req.user
     });
 })
+
+router.get("/fetch",isAuthenticatedUser,getUser)
 
 module.exports = router
