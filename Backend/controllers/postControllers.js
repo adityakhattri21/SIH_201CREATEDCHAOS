@@ -28,13 +28,13 @@ exports.getPostById = catchAsyncErrors(async (req, res, next) => {
 
 exports.getAllPostsOfUser = catchAsyncErrors(async (req, res, next) => {
     const { _id: id } = req.user
-    const post = await Post.find({ userId: id })
+    const post = await Post.find({ userId: id }).populate('userId comments.lawyerId')
     if (post.length === 0) return next(new ErrorHandler("User does not have any posts", 404))
     return res.status(200).json({ post, success: true })
 })
 
 exports.getAllPosts = catchAsyncErrors(async (req, res, next) => {
-    const post = await Post.find({}).populate("userId")
+    const post = await Post.find({}).populate("userId").populate('userId comments.lawyerId')
     return res.status(200).json({ post, success: true })
 })
 
