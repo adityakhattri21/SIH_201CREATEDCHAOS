@@ -75,3 +75,19 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
 
     sendToken(loginUser,userType,res);
  })
+
+ exports.getUser = catchAsyncErrors(async(req,res,next)=>{
+    const {user,userType} = req;
+    let userData;
+    if(userType === 'user'){
+        userData = await User.findById(user);
+    }
+    else if(userType === 'lawyer'){
+        userData = await Lawyer.findById(user);
+    }
+
+    res.status(200).json({
+        success:true,
+        userData:userData
+    })
+ });
