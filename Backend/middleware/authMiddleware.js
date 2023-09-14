@@ -5,7 +5,7 @@ const catchAsyncErrors = require("./catchAsyncErrors");
 const ErrorHandler = require("../utils/errorHandler");
 
 exports.isAuthenticatedUser = catchAsyncErrors(async (req,res,next)=>{
-    const {token} = req.body;
+    const {authorization:token} = req.headers;
 
     if(!token) return next(new ErrorHandler("Login To Continue",401));
 
