@@ -5,6 +5,9 @@ const lawyer = new Schema({
         type: String,
         required: true
     },
+    middleName:{
+        type:String
+    },
     lastName: {
         type: String,
         required: true
@@ -45,6 +48,11 @@ const lawyer = new Schema({
         type: String,
         required: true
     },
+    specialization:[String],
+    isNotary:{type:Boolean,
+            default:false},
+    notaryId:{type:String},
+    
     courts :[
         {
             type: String,
