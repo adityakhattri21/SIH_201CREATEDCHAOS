@@ -5,11 +5,12 @@ const ErrorHandler = require("../utils/errorHandler");
 exports.createPost = catchAsyncErrors(async (req, res, next) => {
     const { user, body, userType } = req
     if (userType !== "user") return next(new ErrorHandler("Only Common man allowed!", 401))
-    const { heading, time, desc } = body
+    const { heading, time, desc, isAnonymous } = body
     const { _id } = user
     if (!heading || !time || !desc) return next(new ErrorHandler("wtf man ! params missing ;send heading or time or desc ", 400))
     await Post.create({
         userId: _id,
+        isAnonymous:isAnonymous?isAnonymous:false,
         heading,
         tags: [],
         desc,

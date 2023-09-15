@@ -21,6 +21,9 @@ const post = new Schema({
         type:String,
         required:true
     },
+    isAnonymous:{
+        type:Boolean
+    },
     comments:[{
         lawyerId:{
             type:Schema.Types.ObjectId,

@@ -11,12 +11,11 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req,res,next)=>{
 
     const decodedData = jwt.verify(token,process.env.JWT_SECRET);
     if(decodedData.userType === 'user')
-    req.user = await User.findById(decodedData.user._id);
+    req.user = await User.findById(decodedData.user);
     
     
     else if(decodedData.userType === 'lawyer')
     req.user = await Lawyer.findById(decodedData.user);
-    
     req.userType = decodedData.userType
 
     next();
