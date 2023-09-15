@@ -88,6 +88,7 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
 
     res.status(200).json({
         success:true,
-        userData:userData
+        userData:userData,
+        userType
     })
  });
