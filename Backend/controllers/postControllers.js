@@ -13,12 +13,14 @@ exports.createPost = catchAsyncErrors(async (req, res, next) => {
     const inference = new HfInference(hf_token)
     const model = "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
 
-    const tags = await inference.zeroShotClassification({
-        model,
-        inputs: [desc],
-        parameters: { candidate_labels: ['Anticipatory Bail', 'Arbitration', 'Armed Forces Tribunal', 'Bankruptcy / Insolvency', 'Breach of Contract', 'Child Custody', 'Civil', 'Consumer Court', 'Court Marriage', 'Customs & Central Excise', 'Cyber Crime', 'Divorce', 'Documentation', 'Domestic Violence', 'Family', 'High Court', 'Immigration', 'International Law', 'Labour & Service', 'Landlord/Tenant', 'Media and Entertainment', 'Medical Negligence', 'Motor Accident', 'Muslim Law', 'Patent', 'R.T.I', 'Recovery', 'Supreme Court', 'Tax', 'Wills / Trusts'] }
-    })
-    console.log(tags)
+    // const data = await inference.zeroShotClassification({
+    //     model: 'facebook/bart-large-mnli',
+    //     inputs: [
+    //       'Hi, I recently bought a device from your company but it is not working as advertised and I would like to get reimbursed!'
+    //     ],
+    //     parameters: { candidate_labels: ['refund', 'legal', 'faq'] }
+    //   })
+    // console.log(data)
     await Post.create({
         userId: _id,
         isAnonymous: isAnonymous ? isAnonymous : false,
