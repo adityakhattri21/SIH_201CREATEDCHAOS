@@ -1,4 +1,12 @@
-[{
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["sih"]
+mycol = mydb["posts"]
+
+
+mydict = [{
     "userId":"5646464",
     "heading" :"Insurance company refused to pay my medical claim",
     "tags":["medical insurance","fraudery"],
@@ -40,3 +48,5 @@
 
 
 ]
+for element in mydict:
+    x = mycol.insert_one(element)
