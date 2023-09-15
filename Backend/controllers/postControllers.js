@@ -2,6 +2,7 @@ const { HfInference } = require("@huggingface/inference");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Post = require("../modals/post.modal");
 const ErrorHandler = require("../utils/errorHandler");
+const MindsDB = require("mindsdb-js-sdk");
 
 exports.createPost = catchAsyncErrors(async (req, res, next) => {
     const { user, body, userType } = req
@@ -9,26 +10,29 @@ exports.createPost = catchAsyncErrors(async (req, res, next) => {
     const { heading, time, desc, isAnonymous } = body
     const { _id } = user
     if (!heading || !time || !desc) return next(new ErrorHandler("wtf man ! params missing ;send heading or time or desc ", 400))
-    const hf_token = process.env.HF_TOKEN
-    const inference = new HfInference(hf_token)
-    const model = "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli"
+    // const mindsdb_user = {
+    //     user:process.env.MINDSDB_USER,
+    //     password:process.env.MINDSDB_SECRET
+    // }
+    // await MindsDB.default.connect(mindsdb_user)
+    // const model = await MindsDB.default.Models.getModel(
+    //     "zeroshot_classifier",
+    //     "mindsdb"
+    // );
+    // const queryOptions = {
+    //     where: [`post = "${desc}"`],
+    // };
 
-    // const data = await inference.zeroShotClassification({
-    //     model: 'facebook/bart-large-mnli',
-    //     inputs: [
-    //       'Hi, I recently bought a device from your company but it is not working as advertised and I would like to get reimbursed!'
-    //     ],
-    //     parameters: { candidate_labels: ['refund', 'legal', 'faq'] }
-    //   })
-    // console.log(data)
+    // const prediction = await model.query(queryOptions);
+    // console.log(prediction)
+
     await Post.create({
         userId: _id,
         isAnonymous: isAnonymous ? isAnonymous : false,
         heading,
-        tags: [],
+        // tags: [prediction.value],
         desc,
-        time
-    })
+        time    })
     res.status(200).json({ msg: "Post Created Successfully", success: true })
 })
 

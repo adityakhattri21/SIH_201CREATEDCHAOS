@@ -67,6 +67,10 @@ const lawyer = new Schema({
         type:Schema.Types.ObjectId,
         ref:"internships"
     }],
+    calendlyId:{
+        type:String,
+        required:true,
+    },
     appliedAt:[{
         appliedAt:{
             type:Date,

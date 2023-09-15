@@ -39,11 +39,12 @@ exports.createUser = catchAsyncErrors(async (req, res, next) => {
         return res.status(200).json({ msg: "Wohhooo !! User Created ", success: true })
     }
     else if (userType === "lawyer") {
-        const {bio, courts, regId} = req.body
+        const {bio, courts, regId, calendlyId} = req.body
         if(!bio || !courts || !regId) return next(new ErrorHandler("Missing Parameters for laywer ",400))
         const user = await Lawyer.create(req.body)
         await Login.create({
             email,
+            calendlyId,
             password: hashedPass,
             uid: user["_id"],
             userType
