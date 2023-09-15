@@ -4,13 +4,24 @@ const internShip = new Schema({
     lawyerId:{
         type:Schema.Types.ObjectId,
         ref:'lawyers',
-        required:true
     },
     heading:{
         type:String,
         required:true
     },
     desc:{
+        type:String,
+        required:true
+    },
+    responsibility:{
+    type:String,
+        required:true
+    },
+    qualifications:{
+      type:String,
+        required:true
+    },
+    offers:{
         type:String,
         required:true
     },
