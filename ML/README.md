@@ -44,7 +44,15 @@ Response is in JSON form with lawyer's necessary information
 
 ## Installation
 
-```virtualenv env```
-```pip install flask scikit-learn pandas```
-```cd filter```
-```python server```
+```
+virtualenv env
+```
+```
+pip install flask scikit-learn pandas
+```
+```
+cd filter
+```
+```
+python server
+```
