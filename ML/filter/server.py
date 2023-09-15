@@ -12,7 +12,7 @@ def postQuery():
     search_text = request.args['search']
     result = recommend_for_posts(search_text)
     return result
-@app.route('/posts')
+@app.route('/lawyers')
 def lawyerQuery():
     search_text = request.args['search']
     result = recommend_for_lawyers(search_text)

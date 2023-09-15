@@ -8,8 +8,8 @@ def recommend_for_lawyers(search_text):
     df = pd.DataFrame(data)
     
     tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-    df["name"] = df['firstName']+" "+df['middleName']+" "+df['lastName'] +df['bio']
-    content = df['name'] + " " + df['city']+" "+df['state']
+    df["name"] = df['firstName']+" "+df['middleName']+" "+df['lastName']
+    content = df['name'] + " " + df['city']+" "+df['state']+" " +df['bio']
     
      
     tfidf_matrix = tfidf_vectorizer.fit_transform(content)
