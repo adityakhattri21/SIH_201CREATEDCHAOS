@@ -78,7 +78,7 @@ exports.getSingleJob = catchAsyncErrors(async(req,res,next)=>{
     
     if(userType !=='lawyer') return next(new ErrorHandler("Don't be Nawghty Shawty",401));
 
-    const post = await Internship.findById(params.id);
+    const post = await Internship.findById(params.id).populate("lawyerId","firstName lastName email");
 
     if(!post) return next(new ErrorHandler("Don't insert wrong id",404));
 
