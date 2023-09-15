@@ -35,10 +35,16 @@ The recommendation system in the Legal Onboarding Services App relies on the fol
 
 ## API Endpoints
 
-* ```GET /posts?search=queryString``
+* ```GET /posts?search=queryString```
 Response is in JSON form with post information
 
 
 * ```GET /lawyers?search=queryString```
 Response is in JSON form with lawyer's necessary information
 
+## Installation
+
+```virtualenv env```
+```pip install flask scikit-learn pandas```
+```cd filter```
+```python server```
