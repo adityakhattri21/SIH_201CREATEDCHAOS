@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:legal_edge/screens/LoginPage/login_page.dart';
 import 'package:legal_edge/screens/profile_page.dart';
 import 'package:legal_edge/services/apis/post_api_handler.dart';
+import 'package:legal_edge/services/auth/auth_services.dart';
 import 'package:legal_edge/services/models/user_model.dart';
 import 'package:legal_edge/utils/posts_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_consts/app_colors.dart';
 import '../services/apis/user_api_handler.dart';
@@ -19,17 +22,28 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   List<Post> posts = [];
+  List<NewPost> newPosts = [];
   List<String> likedBy = [];
   bool present = false;
   String? profilPic = FirebaseAuth.instance.currentUser?.photoURL;
-  final User user = FirebaseAuth.instance.currentUser!;
+  // final User user = FirebaseAuth.instance.currentUser!;
 
   void getPosts() async {
     posts = await PostApiHandler.getPosts();
-    print('new post: ${posts}');
+    print('post: ${posts}');
     setState(() {
       if (posts.isNotEmpty) present = true;
     });
+  }
+
+  void getAllPosts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token')!;
+    newPosts = await PostApiHandler.getNewPosts(token);
+    print('new post: ${newPosts}');
+    setState(() {
+      if (newPosts.isNotEmpty) present = true;
+    }); //TODO : ye dekhna hai....
   }
 
   UserModle? userData;
@@ -46,9 +60,10 @@ class _PostPageState extends State<PostPage> {
 
   @override
   void initState() {
-    getPosts();
-    print(user.email);
-    getUser(user.email!);
+    getAllPosts();
+    // getPosts();//Original get post from the previous version
+    // print(user.email);
+    // getUser(user.email!);
     super.initState();
   }
 
@@ -62,22 +77,29 @@ class _PostPageState extends State<PostPage> {
         elevation: 5,
         leading: GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ProfilePage(
-                userData: userData!,
-              ),
-            ));
+            // Navigator.of(context).push(MaterialPageRoute(
+            //   builder: (context) => ProfilePage(
+            //     userData: userData!,
+            //   ),
+            // ));
           },
-          child: CircleAvatar(
+          child: const CircleAvatar(
             child: CircleAvatar(
-              backgroundImage: NetworkImage(profilPic ??
+              backgroundImage: NetworkImage(
                   'https://cdn.icon-icons.com/icons2/2468/PNG/512/user_kids_avatar_user_profile_icon_149314.png'),
             ),
           ),
         ),
         actions: [
           GestureDetector(
-            onTap: logout,
+            onTap: () {
+              AuthServices().logOut();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
+            },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Icon(Icons.exit_to_app_outlined),
@@ -98,26 +120,38 @@ class _PostPageState extends State<PostPage> {
           ? RefreshIndicator(
               onRefresh: () async {
                 getPosts();
+                getAllPosts();
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
+                    //TODO: add the get posts logic
                     Expanded(
                       child: ListView.builder(
                         reverse: true,
-                        itemCount: posts.length,
+                        // itemCount: posts.length,
+                        itemCount: newPosts.length,
                         itemBuilder: (context, index) {
+                          print(newPosts[index].title);
                           return RedditPostWidget(
-                            email: posts[index].email ?? "",
-                            id: posts[index].id!,
-                            profilePhoto: posts[index].profileP,
-                            post: posts[index],
-                            title: posts[index].title ?? "",
-                            author: posts[index].name ?? "",
-                            description: posts[index].description ?? "",
-                            time: posts[index].time ?? "",
-                            likedBy: posts[index].likedBy!,
+                            email: newPosts[index].email ?? "",
+                            id: newPosts[index].id!,
+                            profilePhoto: newPosts[index].photoUrl,
+                            // post: newPosts[index],
+                            title: newPosts[index].title ?? "",
+                            author: newPosts[index].name ?? "",
+                            description: newPosts[index].desc ?? "",
+                            time: newPosts[index].time ?? "",
+                            // email: posts[index].email ?? "",
+                            // id: posts[index].id!,
+                            // profilePhoto: posts[index].profileP,
+                            // post: posts[index],
+                            // title: posts[index].title ?? "",
+                            // author: posts[index].name ?? "",
+                            // description: posts[index].description ?? "",
+                            // time: posts[index].time ?? "",
+                            // likedBy: posts[index].likedBy!,
                           );
                         },
                       ),

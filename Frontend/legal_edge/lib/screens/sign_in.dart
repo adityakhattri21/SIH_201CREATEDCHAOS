@@ -91,11 +91,11 @@ class _SignInPageState extends State<SignInPage> {
                       await AuthServices().signInWithGoogle();
                   User user = userCredential.user!;
                   if (userCredential.additionalUserInfo!.isNewUser) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => FormPage(user: user),
-                      ),
-                    );
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => FormPage(user: user),
+                    //   ),
+                    // );
                   }
                 },
                 child: SizedBox(

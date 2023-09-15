@@ -7,7 +7,7 @@ import '../services/apis/post_api_handler.dart';
 import '../services/models/post_model.dart';
 
 class RedditPostWidget extends StatelessWidget {
-  final Post post;
+  // final Post post;
   final String id;
   final String title;
   final String email;
@@ -15,7 +15,7 @@ class RedditPostWidget extends StatelessWidget {
   final String description;
   final String time;
   final String? profilePhoto;
-  final List<String?> likedBy;
+  // final List<String?> likedBy;
 
   RedditPostWidget({
     super.key,
@@ -23,10 +23,10 @@ class RedditPostWidget extends StatelessWidget {
     required this.author,
     required this.description,
     required this.time,
-    required this.post,
+    // required this.post,
     required this.profilePhoto,
     required this.id,
-    required this.likedBy,
+    // required this.likedBy,
     required this.email,
   });
   void like(String email, String postId) async {
@@ -36,14 +36,14 @@ class RedditPostWidget extends StatelessWidget {
     await PostApiHandler.likePost(email, postId);
   }
 
-  bool isThere(String email) {
-    if (likedBy.contains(email)) {
-      return true;
-    }
-    return false;
-  }
+  // bool isThere(String email) {
+  //   if (likedBy.contains(email)) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
-  final user = FirebaseAuth.instance.currentUser!;
+  // final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +68,12 @@ class RedditPostWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        IndividualPostPage(post: post, id: id),
-                  ),
-                );
+                // Navigator.of(context).push(//TODO indvidual post page
+                //   MaterialPageRoute(
+                //     builder: (context) =>
+                //         IndividualPostPage(post: post, id: id),
+                //   ),
+                // );
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,19 +141,22 @@ class RedditPostWidget extends StatelessWidget {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () => like(user.email!, post.id!),
-                        child: (isThere(user.email!))
-                            ? Image.asset(
-                                'asset/images/icons8-law-90.png',
-                                scale: 4,
-                              )
-                            : Image.asset(
-                                'asset/images/icons8-law-96.png',
-                                scale: 4,
-                              ),
+                        //TODO: add like logic
+                        // onTap: () => like(user.email!, post.id!),
+                        child:
+                            // (isThere(user.email!))
+                            //     ? Image.asset(
+                            //         'asset/images/icons8-law-90.png',
+                            //         scale: 4,
+                            //       )
+                            //     :
+                            Image.asset(
+                          'asset/images/icons8-law-96.png',
+                          scale: 4,
+                        ),
                       ),
                       const SizedBox(width: 8.0),
-                      Text("${post.likes}"),
+                      // Text("${post.likes}"),
                     ],
                   ),
                   Text(

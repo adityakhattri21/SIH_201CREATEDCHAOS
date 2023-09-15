@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:legal_edge/services/apis/post_api_handler.dart';
+import 'package:legal_edge/utils/posts_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NewPostPage extends StatefulWidget {
   const NewPostPage({super.key});
@@ -24,6 +26,23 @@ class _NewPostPageState extends State<NewPostPage> {
 
   void submit(String email, String title, String description) async {
     PostApiHandler.submitPost(email, title, description);
+  }
+
+  void createPost(String title, String description) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    print(token);
+    var res = await PostApiHandler.createPost(
+        '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}',
+        title,
+        description,
+        token!);
+    print(res);
+    if (res['success'] == false) {
+      showSnackBar(context, res['message']);
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   var user = FirebaseAuth.instance.currentUser;
@@ -64,11 +83,20 @@ class _NewPostPageState extends State<NewPostPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    submit(
-                        user!.email.toString().trim(),
-                        titleController.text.toString(),
-                        descriptionController.text.toString());
-                    Navigator.of(context).pop();
+                    // submit(
+                    //     user!.email.toString().trim(),
+                    //     titleController.text.toString(),
+                    //     descriptionController.text.toString());
+                    if (titleController.text.isNotEmpty &&
+                        descriptionController.text.isNotEmpty) {
+                      createPost(
+                        titleController.text.trim().toString(),
+                        descriptionController.text.trim().toString(),
+                      );
+                    } else {
+                      showSnackBar(
+                          context, 'Please fill the fields appropriately');
+                    }
                   },
                   child: const Text('Post'),
                 ),

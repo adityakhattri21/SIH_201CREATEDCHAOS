@@ -166,4 +166,50 @@ class LawyerApiHandler {
       ),
     );
   }
+
+  static Future registerNewLawyer(
+    String? firstName,
+    String? lastName,
+    String? regId,
+    String? bio,
+    List<String?> courts,
+    int? contact,
+    String? email,
+    String? password,
+    String? city,
+    String? state,
+    String? postalCode,
+    String? aadharNumber,
+    String? gender,
+  ) async {
+    Uri uri = Uri.parse('http://192.168.1.6:4000/user/create');
+    var response = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        {
+          "userType": "lawyer",
+          "firstName": firstName,
+          "lastName": lastName,
+          "regId": regId,
+          "bio": bio,
+          "courts": courts,
+          "contact": contact,
+          "email": email,
+          "password": password,
+          "city": city,
+          "state": state,
+          "postalCode": postalCode,
+          "aadharNumber": aadharNumber,
+          "gender": gender,
+        },
+      ),
+    );
+    // print('success');
+    print(response.statusCode);
+    print(response.body);
+    return jsonDecode(response.body);
+  }
 }

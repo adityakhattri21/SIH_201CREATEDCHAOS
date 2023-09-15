@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:legal_edge/app_consts/api_consts.dart';
+import 'package:legal_edge/utils/posts_card.dart';
 
 import '../models/user_model.dart';
 
@@ -103,5 +105,58 @@ class UserApiHandler {
         },
       ),
     );
+  }
+
+  static Future registerNewUser(
+    String? firstName,
+    String? lastName,
+    int? contact,
+    String? email,
+    String? password,
+    String? city,
+    String? state,
+    String? postalCode,
+    String? aadharNumber,
+    String? gender,
+  ) async {
+    Uri uri = Uri.parse('http://$baseUrl:4000/user/create');
+    var response = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        {
+          "userType": "user",
+          "firstName": firstName,
+          "lastName": lastName,
+          "contact": contact,
+          "email": email,
+          "password": password,
+          "city": city,
+          "state": state,
+          "postalCode": postalCode,
+          "aadharNumber": aadharNumber,
+          "gender": gender,
+        },
+      ),
+    );
+    print('success');
+    print(response.statusCode);
+    print(response.body);
+    var res = jsonDecode(response.body);
+    return res;
+  }
+
+  static Future getCurrentUser(String token) async {
+    Uri uri = Uri.parse('http://$baseUrl:4000/user/me');
+    var res = await http.get(
+      uri,
+      headers: <String, String>{
+        "Authorization": token,
+      },
+    );
+    var response = jsonDecode(res.body);
+    return response;
   }
 }
