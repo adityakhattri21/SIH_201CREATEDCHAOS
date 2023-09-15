@@ -14,6 +14,18 @@ const internShip = new Schema({
         type:String,
         required:true
     },
+    responsibility:{
+    type:String,
+        required:true
+    },
+    qualifications:{
+      type:String,
+        required:true
+    },
+    offers:{
+        type:String,
+        required:true
+    },
      createdAt:{
         type:Date,
         default:Date.now
