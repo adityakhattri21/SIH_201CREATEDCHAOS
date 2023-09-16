@@ -49,6 +49,10 @@ const lawyer = new Schema({
         type: String,
         required: true
     },
+    cop:{
+        type:String,
+        required:true
+    },
     specialization:[String],
     isNotary:{type:Boolean,
             default:false},
@@ -84,7 +88,7 @@ const lawyer = new Schema({
         },
         opening:{
             type:Schema.Types.ObjectId,
-            ref:"internships"
+            ref:"Internship"
         }
     }]
 })
