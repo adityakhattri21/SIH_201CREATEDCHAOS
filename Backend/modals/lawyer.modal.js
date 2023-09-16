@@ -70,7 +70,7 @@ const lawyer = new Schema({
     },
     internPosts:[{
         type:Schema.Types.ObjectId,
-        ref:"internships"
+        ref:"Internship"
     }],
     imageURL:{
         type:String,

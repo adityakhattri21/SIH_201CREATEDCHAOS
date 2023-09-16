@@ -86,7 +86,7 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
     if(userType === 'user')
     loginUser = await User.findById(reqUser.uid);
     else if(userType === 'lawyer')
-    loginUser = await Lawyer.findById(reqUser.uid).populate("appliedAt.opening","heading desc offers");
+    loginUser = await Lawyer.findById(reqUser.uid);
     else if(userType === 'other')
     loginUser = await Others.findById(reqUser.uid);
 
@@ -100,7 +100,7 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
         userData = await User.findById(user);
     }
     else if(userType === 'lawyer'){
-        userData = await Lawyer.findById(user).populate("appliedAt.opening");
+        userData = await Lawyer.findById(user).populate("appliedAt.opening").populate("internPosts");
     }
     else if(userType === "other"){
         userData = await Others.findById(user)
