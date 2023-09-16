@@ -6,7 +6,8 @@ const lawyer = new Schema({
         required: true
     },
     middleName:{
-        type:String
+        type:String,
+        default:""
     },
     lastName: {
         type: String,
