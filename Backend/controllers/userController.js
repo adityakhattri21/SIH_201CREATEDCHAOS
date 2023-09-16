@@ -100,7 +100,7 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
         userData = await User.findById(user);
     }
     else if(userType === 'lawyer'){
-        userData = await Lawyer.findById(user);
+        userData = await Lawyer.findById(user).populate("appliedAt.opening");
     }
     else if(userType === "other"){
         userData = await Others.findById(user)

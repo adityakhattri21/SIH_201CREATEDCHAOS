@@ -88,7 +88,7 @@ const lawyer = new Schema({
         },
         opening:{
             type:Schema.Types.ObjectId,
-            ref:"internships"
+            ref:"Internship"
         }
     }]
 })
