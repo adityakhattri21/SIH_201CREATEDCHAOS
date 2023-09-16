@@ -53,11 +53,16 @@ class FormFields extends StatelessWidget {
 }
 
 class NewFormFields extends StatelessWidget {
-  const NewFormFields(
-      {super.key, required this.controller, this.hint, required this.title});
+  NewFormFields(
+      {super.key,
+      required this.controller,
+      this.hint,
+      required this.title,
+      this.number});
   final TextEditingController controller;
   final String? hint;
   final String title;
+  bool? number;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +95,9 @@ class NewFormFields extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
               child: TextField(
                 controller: controller,
+                keyboardType: (number == true || number != null)
+                    ? TextInputType.number
+                    : TextInputType.text,
                 decoration: InputDecoration(
                   hintText: hint,
                   hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
