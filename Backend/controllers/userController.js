@@ -14,7 +14,7 @@ exports.createUser = catchAsyncErrors(async (req, res, next) => {
 
     if (!userTypes.includes(userType)) return next(new ErrorHandler('Invalid User Type', 400));
 
-    const { firstName, lastName, email, gender, contact, city, state, postalCode, aadharNumber, password } = req.body
+    const { firstName, lastName, email, gender, imageURL ,contact, city, state, postalCode, aadharNumber, password } = req.body
     if (!firstName || !lastName || !email || !gender || !contact || !city || !state || !postalCode || !aadharNumber || !password) {
         return next(new ErrorHandler("Parameter missing bruh!", 400));
     }
