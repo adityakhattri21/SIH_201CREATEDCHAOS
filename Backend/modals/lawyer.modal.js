@@ -48,6 +48,10 @@ const lawyer = new Schema({
         type: String,
         required: true
     },
+    cop:{
+        type:String,
+        required:true
+    },
     specialization:[String],
     isNotary:{type:Boolean,
             default:false},
