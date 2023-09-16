@@ -2,7 +2,7 @@ const { HfInference } = require("@huggingface/inference");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Post = require("../modals/post.modal");
 const ErrorHandler = require("../utils/errorHandler");
-const MindsDB = require("mindsdb-js-sdk");
+// const MindsDB = require("mindsdb-js-sdk");
 
 exports.createPost = catchAsyncErrors(async (req, res, next) => {
     const { user, body, userType } = req
