@@ -56,10 +56,11 @@ exports.createUser = catchAsyncErrors(async (req, res, next) => {
         const {license, isStamp, bio} = req.body
         if (!license || isStamp === undefined || isStamp === null || !bio) return next(new ErrorHandler("liscence || isStamp || bio missing",400))
         const user = await Others.create(req.body)
+        console.log(hashedPass)
         await Login.create({
             email,
-            password,
-            uid:user["_id"],
+            password: hashedPass,
+            uid: user["_id"],
             userType
         })
         return res.status(200).json({message:"Other user created successfully", success:true})
@@ -86,6 +87,8 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
     loginUser = await User.findById(reqUser.uid);
     else if(userType === 'lawyer')
     loginUser = await Lawyer.findById(reqUser.uid);
+    else if(userType === 'other')
+    loginUser = await Others.findById(reqUser.uid);
 
     sendToken(loginUser,userType,res);
  })
@@ -98,6 +101,9 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
     }
     else if(userType === 'lawyer'){
         userData = await Lawyer.findById(user);
+    }
+    else if(userType === "other"){
+        userData = await Others.findById(user)
     }
 
     res.status(200).json({

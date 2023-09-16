@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../modals/user.modal");
 const Lawyer = require("../modals/lawyer.modal");
+const Others = require("../modals/other.modal")
 const catchAsyncErrors = require("./catchAsyncErrors");
 const ErrorHandler = require("../utils/errorHandler");
 
@@ -16,6 +17,10 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req,res,next)=>{
     
     else if(decodedData.userType === 'lawyer')
     req.user = await Lawyer.findById(decodedData.user);
+    
+    else if(decodedData.userType === 'other')
+    req.user = await Others.findById(decodedData.user)
+    
     req.userType = decodedData.userType
 
     next();
