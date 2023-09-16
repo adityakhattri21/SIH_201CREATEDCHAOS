@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:legal_edge/app_consts/app_constants.dart';
+import 'package:legal_edge/services/apis/internship_api_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/post_page.dart';
+import '../screens/posts_pages/posts.dart';
 import '../services/apis/post_api_handler.dart';
 import '../services/models/post_model.dart';
 
@@ -49,33 +52,39 @@ class RedditPostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: const Offset(0, 2), // changes position of shadow
+      child: GestureDetector(
+        onTap: () {
+          // Navigator.of(context).push(//TODO indvidual post page
+          //   MaterialPageRoute(
+          //     builder: (context) =>
+          // IndividualPostPage(post: post, id: id),
+          //   ),
+          // );
+          Navigator.of(context).push(
+            //TODO indvidual post page
+            MaterialPageRoute(
+              builder: (context) => IndividualPost(postId: id),
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () {
-                // Navigator.of(context).push(//TODO indvidual post page
-                //   MaterialPageRoute(
-                //     builder: (context) =>
-                //         IndividualPostPage(post: post, id: id),
-                //   ),
-                // );
-              },
-              child: Column(
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: const Offset(0, 2), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
@@ -132,44 +141,44 @@ class RedditPostWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        //TODO: add like logic
-                        // onTap: () => like(user.email!, post.id!),
-                        child:
-                            // (isThere(user.email!))
-                            //     ? Image.asset(
-                            //         'asset/images/icons8-law-90.png',
-                            //         scale: 4,
-                            //       )
-                            //     :
-                            Image.asset(
-                          'asset/images/icons8-law-96.png',
-                          scale: 4,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          //TODO: add like logic
+                          // onTap: () => like(user.email!, post.id!),
+                          child:
+                              // (isThere(user.email!))
+                              //     ? Image.asset(
+                              //         'asset/images/icons8-law-90.png',
+                              //         scale: 4,
+                              //       )
+                              //     :
+                              Image.asset(
+                            'asset/images/icons8-law-96.png',
+                            scale: 4,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8.0),
-                      // Text("${post.likes}"),
-                    ],
-                  ),
-                  Text(
-                    time,
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.grey,
+                        const SizedBox(width: 8.0),
+                        // Text("${post.likes}"),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                    Text(
+                      time,
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

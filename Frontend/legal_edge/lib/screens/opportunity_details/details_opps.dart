@@ -4,6 +4,7 @@ import 'package:legal_edge/services/models/internship_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app_consts/app_constants.dart';
+import '../../utils/posts_card.dart';
 
 class OppsDetails extends StatefulWidget {
   final String name;
@@ -28,6 +29,17 @@ class OppsDetails extends StatefulWidget {
 class _OppsDetailsState extends State<OppsDetails> {
   Internship? opps;
   bool loading = true;
+  void apply(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token')!;
+    var response = await InternshipApiHandler.applyTo(token, widget.id);
+    print(response);
+    if (response['success'] == 'true') {
+      showSnackBar(context, response['message']);
+    } else {
+      showSnackBar(context, 'Some error occurred! Please try again.');
+    }
+  }
 
   void getDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -181,6 +193,7 @@ class _OppsDetailsState extends State<OppsDetails> {
                                 // } else {
                                 //   // showSnackBar(context, res['message']);
                                 // }
+                                apply(context);
                               },
                               child: Container(
                                 height: size.height * 0.065,

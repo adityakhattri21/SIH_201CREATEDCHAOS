@@ -2,16 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:legal_edge/screens/LoginPage/login_page.dart';
-import 'package:legal_edge/screens/profile_page.dart';
+import 'package:legal_edge/screens/profile_page/profile_page.dart';
 import 'package:legal_edge/services/apis/post_api_handler.dart';
 import 'package:legal_edge/services/auth/auth_services.dart';
 import 'package:legal_edge/services/models/user_model.dart';
 import 'package:legal_edge/utils/posts_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../app_consts/app_colors.dart';
-import '../services/apis/user_api_handler.dart';
-import '../services/models/post_model.dart';
+import '../../app_consts/app_colors.dart';
+import '../../services/apis/user_api_handler.dart';
+import '../../services/models/post_model.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({super.key});

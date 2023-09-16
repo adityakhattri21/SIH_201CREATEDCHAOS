@@ -4,7 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:legal_edge/app_consts/app_colors.dart';
 import 'package:legal_edge/screens/messages.dart';
 import 'package:legal_edge/screens/onboarding/onboard.dart';
-import 'package:legal_edge/screens/posts_page.dart';
+import 'package:legal_edge/screens/posts_pages/posts_page.dart';
 import 'package:legal_edge/screens/search_lawyer_page.dart';
 import 'package:legal_edge/screens/sign_in.dart';
 import 'package:legal_edge/screens/splash_screen.dart';

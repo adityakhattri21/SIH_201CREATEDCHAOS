@@ -115,4 +115,28 @@ class PostApiHandler {
     print('new posts got');
     return NewPost.postFromSnapshot(temp);
   }
+
+  static Future<NewPost> getPostById(String token, String postId) async {
+    Uri uri = Uri.parse('http://$baseUrl:4000/post/$postId');
+    var res = await http.get(
+      uri,
+      headers: <String, String>{
+        'Authorization': token,
+      },
+    );
+    var response = jsonDecode(res.body);
+    return NewPost.fromJson(response['post']);
+  }
+
+  static Future getUsersPost(String token) async {
+    Uri uri = Uri.parse('http://$baseUrl:4000/post/user');
+    var res = await http.get(
+      uri,
+      headers: <String, String>{
+        'Authorization': token,
+      },
+    );
+    var response = jsonDecode(res.body);
+    return NewPost.fromJson(response['post']);
+  }
 }

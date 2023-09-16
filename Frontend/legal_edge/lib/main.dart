@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:legal_edge/screens/LoginPage/login_page.dart';
 import 'package:legal_edge/screens/form/forms.dart';
 import 'package:legal_edge/screens/main_auth_page.dart';
-import 'package:legal_edge/screens/posts_page.dart';
+import 'package:legal_edge/screens/posts_pages/posts_page.dart';
 import 'package:legal_edge/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app_consts/app_colors.dart';

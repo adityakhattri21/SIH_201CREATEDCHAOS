@@ -77,4 +77,19 @@ class InternshipApiHandler {
     var res = jsonDecode(response.body);
     return res;
   }
+
+  static Future applyTo(String token, String postId) async {
+    Uri url = Uri.parse('http://$baseUrl:4000/job/apply');
+    var res = await http.post(
+      url,
+      headers: <String, String>{
+        "Authorization": token,
+      },
+      body: {
+        "internId": postId,
+      },
+    );
+    var response = jsonDecode(res.body);
+    return response;
+  }
 }

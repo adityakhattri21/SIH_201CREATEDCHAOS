@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:legal_edge/screens/opportunity_details/details_opps.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app_consts/app_colors.dart';
 import '../../app_consts/app_constants.dart';
+import '../../services/apis/internship_api_handler.dart';
+import '../../utils/posts_card.dart';
 
 class IPCSections extends StatelessWidget {
   final String title;
@@ -54,6 +57,18 @@ class InternshipsTile extends StatelessWidget {
       required this.title,
       required this.desc,
       required this.id});
+
+  void apply(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token')!;
+    var response = await InternshipApiHandler.applyTo(token, id);
+    print(response);
+    if (response['success'] == 'true') {
+      showSnackBar(context, response['message']);
+    } else {
+      showSnackBar(context, 'Some error occurred! Please try again.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,6 +195,7 @@ class InternshipsTile extends StatelessWidget {
                         // } else {
                         //   // showSnackBar(context, res['message']);
                         // }
+                        apply(context);
                       },
                       child: Container(
                         height: size.height * 0.05,

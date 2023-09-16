@@ -6,7 +6,9 @@ import 'package:legal_edge/screens/Intern_Ipc_page/internship.dart';
 import 'package:legal_edge/screens/LoginPage/login_page.dart';
 import 'package:legal_edge/screens/main_auth_page.dart';
 import 'package:legal_edge/screens/onboarding/onboard.dart';
-import 'package:legal_edge/screens/posts_page.dart';
+import 'package:legal_edge/screens/posts_pages/posts_page.dart';
+import 'package:legal_edge/screens/profile_page/profile.dart';
+import 'package:legal_edge/screens/profile_page/profile_page.dart';
 import 'package:legal_edge/screens/search_lawyer_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,7 +92,7 @@ final screen = [
   // const MessagesPage(),
   const SearchLawyerPage(),
   const InternshipPage(),
-  const SearchLawyerPage(),
+  const ProfileScreen(),
 ];
 
 class MainPage extends StatefulWidget {
@@ -138,16 +140,16 @@ class _MainPageState extends State<MainPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.message_outlined),
-            label: 'Messages',
+            icon: Icon(Icons.search_outlined),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.file_open),
             label: 'Info',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search_outlined),
-            label: 'Search',
+            icon: Icon(Icons.person_2_outlined),
+            label: 'Profile',
           ),
         ],
         // type: BottomNavigationBarType.shifting,

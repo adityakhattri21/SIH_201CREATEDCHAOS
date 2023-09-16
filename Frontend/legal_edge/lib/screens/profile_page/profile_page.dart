@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:legal_edge/app_consts/app_colors.dart';
 import 'package:legal_edge/app_consts/app_constants.dart';
 
-import '../services/models/user_model.dart';
+import '../../services/models/user_model.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key, required this.userData});
@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Icon(Icons.logout_outlined),
                       SizedBox(
                         width: 7,

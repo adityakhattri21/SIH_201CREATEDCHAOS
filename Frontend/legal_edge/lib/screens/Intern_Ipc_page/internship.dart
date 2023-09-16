@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../app_consts/app_colors.dart';
 import '../../app_consts/app_constants.dart';
 import '../../utils/list_tile.dart';
+import '../../utils/posts_card.dart';
 
 class InternshipPage extends StatefulWidget {
   const InternshipPage({super.key});
