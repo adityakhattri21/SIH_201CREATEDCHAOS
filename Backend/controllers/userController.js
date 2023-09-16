@@ -86,7 +86,7 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
     if(userType === 'user')
     loginUser = await User.findById(reqUser.uid);
     else if(userType === 'lawyer')
-    loginUser = await Lawyer.findById(reqUser.uid);
+    loginUser = await Lawyer.findById(reqUser.uid).populate("appliedAt.opening","heading desc offers");
     else if(userType === 'other')
     loginUser = await Others.findById(reqUser.uid);
 
