@@ -5,7 +5,7 @@ import pandas as pd
 from filter_posts import recommend_for_posts
 from filter_lawyers import recommend_for_lawyers
 app = Flask(__name__)
-recommend_for_posts('dispute')
+
 
 @app.route('/posts')
 def postQuery():

@@ -6,6 +6,7 @@ const ErrorHandler = require("../utils/errorHandler")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Lawyer = require("../modals/lawyer.modal")
 const sendToken = require("../utils/generateToken");
+const Others = require("../modals/other.modal")
 
 exports.createUser = catchAsyncErrors(async (req, res, next) => {
     //validating request
@@ -51,6 +52,19 @@ exports.createUser = catchAsyncErrors(async (req, res, next) => {
         })
         return res.status(200).json({ msg: "Wohhooo !! Lawyer Created ", success: true })
     }
+    else if (userType === "other"){
+        const {license, isStamp, bio} = req.body
+        if (!license || isStamp === undefined || isStamp === null || !bio) return next(new ErrorHandler("liscence || isStamp || bio missing",400))
+        const user = await Others.create(req.body)
+        console.log(hashedPass)
+        await Login.create({
+            email,
+            password: hashedPass,
+            uid: user["_id"],
+            userType
+        })
+        return res.status(200).json({message:"Other user created successfully", success:true})
+    }
     return next(new ErrorHandler("Route under Construction ! ", 500));
 });
 
@@ -73,6 +87,8 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
     loginUser = await User.findById(reqUser.uid);
     else if(userType === 'lawyer')
     loginUser = await Lawyer.findById(reqUser.uid);
+    else if(userType === 'other')
+    loginUser = await Others.findById(reqUser.uid);
 
     sendToken(loginUser,userType,res);
  })
@@ -85,6 +101,9 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
     }
     else if(userType === 'lawyer'){
         userData = await Lawyer.findById(user);
+    }
+    else if(userType === "other"){
+        userData = await Others.findById(user)
     }
 
     res.status(200).json({
