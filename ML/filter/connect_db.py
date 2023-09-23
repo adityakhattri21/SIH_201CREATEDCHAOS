@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-myclient = MongoClient("mongodb+srv://manishmadan101:QqXwEgB7VhIzPSsh@cluster0.wtpmj5h.mongodb.net")
+myclient = MongoClient(os.getenv('DB-URI'))
 db = myclient["sih"]
 posts = db["posts"]
 lawyers=db['lawyers']
